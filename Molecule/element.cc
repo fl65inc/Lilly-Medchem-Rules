@@ -18,6 +18,8 @@ using std::endl;
 #include "iwstring_data_source.h"
 #include "element.h"
 #include "misc2.h"
+#include <cstdint>
+
 
 static resizable_array_p<Element> elements;
 
@@ -80,7 +82,7 @@ set_display_strange_chemistry_messages(int s)
 }
 
 /*
-  Search the non periodic table elements. 
+  Search the non periodic table elements.
   If this ever becomes slow, use a hash
 */
 
@@ -332,7 +334,7 @@ check_valid_element_via_hash (const char * s, int nchars,
 
 /*
   In order to get the elements created automatically, let's make a class
-  which will get instantiated. 
+  which will get instantiated.
 */
 
 class element_creator
@@ -363,7 +365,7 @@ static element_creator foo;      // the constructor will cause the elements to b
 void
 Element::_default_values (atomic_number_t i)
 {
-  assert (PLAUSIBLE_ATOMIC_NUMBER(i) || NOT_AN_ELEMENT == i); 
+  assert (PLAUSIBLE_ATOMIC_NUMBER(i) || NOT_AN_ELEMENT == i);
 
   _atomic_number  = i;
   _atomic_mass    = static_cast<atomic_mass_t>(0.0);
@@ -712,83 +714,83 @@ Element::_default_values (atomic_number_t i)
       _organic = 1;
       _exact_mass     = 78.9183361;
       break;
-   
+
     case 36:
       _symbol = "Kr";
       _normal_isotope = 84;
       _atomic_mass = static_cast<atomic_mass_t>(83.798);
       _exact_mass     = 83.911507;
       break;
-   
+
     case 37:
       _symbol = "Rb";
       _normal_isotope = 85;
       _atomic_mass = static_cast<atomic_mass_t>(85.4678);
       _exact_mass     = 84.911794;
       break;
-   
+
     case 38:
       _symbol = "Sr";
       _normal_isotope = 88;
       _atomic_mass = static_cast<atomic_mass_t>(87.62);
       _exact_mass     = 87.9056188;
       break;
-   
+
     case 39:
       _symbol = "Y";
       _normal_isotope = 89;
       _atomic_mass = static_cast<atomic_mass_t>(88.90585);
       _exact_mass     = 88.905849;    // possible problem at Trace Sciences
       break;
-   
+
     case 40:
       _symbol = "Zr";
       _normal_isotope = 91;
       _atomic_mass = static_cast<atomic_mass_t>(91.224);
       _exact_mass     = 89.9047026;
       break;
-   
+
     case 41:
       _symbol = "Nb";
       _normal_isotope = 93;
       _atomic_mass = static_cast<atomic_mass_t>(92.90638);
       _exact_mass     = 92.9063772;
       break;
-   
+
     case 42:
       _symbol = "Mo";
       _normal_isotope = 96;
       _atomic_mass = static_cast<atomic_mass_t>(95.96);
       _exact_mass     = 97.9054073;
       break;
-   
+
     case 43:
       _symbol = "Tc";
       _normal_isotope = 99;
       _atomic_mass = static_cast<atomic_mass_t>(98);     // not sure why these are different?
       break;
-   
+
     case 44:
       _symbol = "Ru";
       _normal_isotope = 101;
       _atomic_mass = static_cast<atomic_mass_t>(101.07);
       _exact_mass     = 101.9043485;
       break;
-   
+
     case 45:
       _symbol = "Rh";
       _normal_isotope = 103;
       _atomic_mass = static_cast<atomic_mass_t>(102.90550);
       _exact_mass     = 102.9055;
       break;
-   
+
     case 46:
       _symbol = "Pd";
       _normal_isotope = 106;
       _atomic_mass = static_cast<atomic_mass_t>(106.42);
       _exact_mass     = 105.903478;
       break;
-   
+
     case 47:
       _symbol = "Ag";
       _normal_isotope = 108;
@@ -816,14 +818,14 @@ Element::_default_values (atomic_number_t i)
       _atomic_mass = static_cast<atomic_mass_t>(118.710);
       _exact_mass     = 119.9021991;
       break;
-   
+
     case 51:
       _symbol = "Sb";
       _normal_isotope = 122;
       _atomic_mass = static_cast<atomic_mass_t>(121.760);
       _exact_mass     = 120.9038212;
       break;
-   
+
     case 52:
       _symbol = "Te";
       _aromatic_symbol = "te";
@@ -833,7 +835,7 @@ Element::_default_values (atomic_number_t i)
       _outer_shell_electrons = 6;
       _exact_mass     = 129.906229;
       break;
-   
+
     case 53:
       _symbol = "I";
       _normal_isotope = 127;
@@ -872,7 +874,7 @@ Element::_default_values (atomic_number_t i)
 
     case 57:
       _symbol = "La";
-      _normal_isotope = 139; 
+      _normal_isotope = 139;
       _atomic_mass = static_cast<atomic_mass_t>(138.9055);
       _exact_mass     = 138.906347;
       break;
@@ -1539,7 +1541,7 @@ get_element_from_symbol(const char *name, int nchars, int & isotope)
 }
 
 /*
-  Jan 2004. Ran into problems with the lowercase elements using get_element_from_symbol, 
+  Jan 2004. Ran into problems with the lowercase elements using get_element_from_symbol,
   because it converts the first letter to uppercase
 */
 
@@ -1803,7 +1805,7 @@ element_from_smiles_string (const char * smiles,
   }
 
 // We can create any previously unknown elements
-    
+
   result = create_element_with_symbol(ele);
 
 //cerr << "Created element from '" << ele << "'\n";
@@ -1892,7 +1894,7 @@ Element::ok() const
     return 0;
   else if (_atomic_number > HIGHEST_ATOMIC_NUMBER)
     return 0;
-  
+
   if (0 == _symbol.length())
     return 0;
 
@@ -1921,7 +1923,7 @@ get_element_from_atomic_number (atomic_number_t z)
 
 int
 Element::append_smiles_symbol (IWString & smiles,
-                               aromaticity_type_t arom, 
+                               aromaticity_type_t arom,
                                int isotope) const
 {
   if (isotope && include_isotopes_in_smiles)
@@ -2244,7 +2246,7 @@ read_ptable_file (const const_IWSubstring & fname)
 
   return read_ptable(input);
 }
-      
+
 int
 display_standard_element_options (std::ostream & os)
 {
@@ -2424,7 +2426,7 @@ Element::read_ptable_record (const const_IWSubstring & buffer)
 }
 
 /*
-  Copy some - but not all element data. Remember, this is mostly intended for 
+  Copy some - but not all element data. Remember, this is mostly intended for
   letting the permanent aromatic elements know that they are actually carbon,
   nitrogen and oxygen atoms
 
@@ -2457,7 +2459,7 @@ de_allocate_periodic_table()
 }
 
 /*
-  
+
 */
 
 void

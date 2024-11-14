@@ -5,6 +5,8 @@
 #include "tbb/scalable_allocator.h"
 #endif
 
+#include <cstdint>
+
 class XMLNode;
 
 /*
@@ -73,7 +75,7 @@ class Mol2Graph
     int _preserve_cc_double_bonds_saturated;
     int _preserve_cc_double_bonds_no_heteroatoms;
     int _remove_chiral_centres;
-    
+
     int _append_molecular_formula;
 
     int _aromatic_distinguishing_formula;
@@ -286,7 +288,7 @@ class Smiles_Information
 
     resizable_array<atom_number_t> _atom_order_in_smiles;
 
-    IWString _smiles;          
+    IWString _smiles;
 
     int _smiles_is_smarts;
 
@@ -577,11 +579,11 @@ class Molecule : private resizable_array_p<Atom>
 #endif
 
 #ifdef COMPILING_MOLECULE_SMARTS
-#include "molecule_smarts.h"        
+#include "molecule_smarts.h"
 #endif
 
 #ifdef COMPILING_MOLECULE_CIF
-#include "molecule_cif.h"        
+#include "molecule_cif.h"
 #endif
 
 //  Stuff needed for finding kekule forms:
@@ -874,7 +876,7 @@ class Molecule : private resizable_array_p<Atom>
 //  ESSSR rings have been determined, it will report the number of ESSSR rings,
 //  but if ring determination hasn't been done, it will report the number
 //  of SSSR rings computed by Euler's formula.
-//  
+//
     int nrings ();                  // number of rings in molecule
     int nrings_no_compute() const;    // number of rings in molecule without performing ring perception (assumes has already been performed)
     int number_sssr_rings ();
@@ -1145,12 +1147,12 @@ class Molecule : private resizable_array_p<Atom>
 
 //  These functions add one molecule to another, perhaps excluding certain atoms
 
-    int add_molecule         (const Molecule *);        
+    int add_molecule         (const Molecule *);
     int add_molecule_without (const Molecule *, atom_number_t);
     int add_molecule_without (const Molecule *, atom_number_t, atom_number_t);
 
 //  Partial charges and atom types behave in similar ways
-                  
+
     int     has_charges () const;
     void    allocate_charges ();
     void    invalidate_charges ();
@@ -1262,7 +1264,7 @@ class Molecule : private resizable_array_p<Atom>
 
     void rotate_to_longest_distance_along_x (atom_number_t & left, atom_number_t & right);
 
-//  Found that I lost accurace with the coord_t version, so make available 
+//  Found that I lost accurace with the coord_t version, so make available
 //  versions of rotate_atoms with either Space_Vector<coord_t> or Space_Vector<double>
 
     template <typename T>
@@ -1838,7 +1840,7 @@ class Temporarily_Disable_Messages_About_Unable_to_Compute_Implicit_Hydrogens
       set_display_abnormal_valence_messages(0);
       set_display_messages_about_unable_to_compute_implicit_hydgogens(0);
     }
-    ~Temporarily_Disable_Messages_About_Unable_to_Compute_Implicit_Hydrogens () 
+    ~Temporarily_Disable_Messages_About_Unable_to_Compute_Implicit_Hydrogens ()
     {
       set_display_abnormal_valence_messages(1);
       set_display_messages_about_unable_to_compute_implicit_hydgogens(1);
